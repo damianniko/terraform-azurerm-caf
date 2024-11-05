@@ -34,17 +34,10 @@ resource "azurerm_private_endpoint" "pep" {
           for key in try(private_dns_zone_group.value.keys, []) : [
             try(var.private_dns[try(private_dns_zone_group.value.lz_key, var.client_config.landingzone_key)][key].id, [])
           ]
-          ]
-        ),
+        ]),
         lookup(private_dns_zone_group.value, "ids", [])
       )
-
     }
-  lifecycle {
-    ignore_changes = [
-      private_dns_zone_group
-    ]
-  }
   }
 
   dynamic "ip_configuration" {
@@ -58,7 +51,13 @@ resource "azurerm_private_endpoint" "pep" {
     }
   }
 
+  lifecycle {
+    ignore_changes = [
+      private_dns_zone_group # Referencing this might be tricky, ensure it's the intended property to ignore.
+    ]
+  }
 }
+
 
 resource "time_sleep" "delay" {
   count           = can(lookup(var.settings, var.settings.delay_time_after_creation, false)) ? 1 : 0
