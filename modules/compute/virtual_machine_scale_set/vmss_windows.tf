@@ -305,6 +305,7 @@ resource "azurerm_key_vault_secret" "admin_password" {
   name         = format("%s-admin-password", azurecaf_name.windows_computer_name_prefix[each.key].result)
   value        = random_password.admin[local.os_type].result
   key_vault_id = local.keyvault.id
+  expiration_date = try(each.value.expiration_date, null)
 
   lifecycle {
     ignore_changes = [
