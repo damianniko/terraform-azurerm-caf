@@ -76,6 +76,7 @@ resource "azurerm_key_vault_secret" "sql_admin_password" {
   name         = can(var.settings.keyvault_secret_name) ? var.settings.keyvault_secret_name : format("%s-password", azurecaf_name.mssql.result)
   value        = random_password.sql_admin.0.result
   key_vault_id = var.keyvault_id
+  expiration_date = try(each.value.expiration_date, null)
 
   lifecycle {
     ignore_changes = [
