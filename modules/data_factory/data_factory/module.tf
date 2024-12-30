@@ -58,7 +58,7 @@ resource "azurerm_data_factory" "df" {
   #customer_managed_key_id         = try(var.settings.customer_managed_key_id)
   tags = local.tags
   lifecycle {
-    ignore_changes = [ global_paramete, tags ]
+    ignore_changes = [ global_parameter, tags ]
   }
 }
 
