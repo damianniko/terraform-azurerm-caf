@@ -13,6 +13,6 @@ resource "azurerm_data_factory_integration_runtime_self_hosted" "dfirsh" {
   name            = azurecaf_name.dfirsh.result
 
   lifecycle {
-    ignore_changes = [ name, global_parameter ]
+    ignore_changes = [ name ]
   }
 }
