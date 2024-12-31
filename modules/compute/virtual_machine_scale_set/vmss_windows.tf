@@ -63,7 +63,7 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   admin_username      = try(each.value.admin_username_key, null) == null ? each.value.admin_username : local.admin_username
   instances           = each.value.instances
   location            = local.location
-  name                = azurecaf_name.windows[each.key].result
+  name                = each.value.name
   resource_group_name = local.resource_group_name
   sku                 = each.value.sku
   tags                = merge(local.tags, try(each.value.tags, {}))
